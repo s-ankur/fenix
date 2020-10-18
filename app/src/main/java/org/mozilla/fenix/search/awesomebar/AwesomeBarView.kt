@@ -268,23 +268,26 @@ class AwesomeBarView(
 
         providersToRemove.add(shortcutsEnginePickerProvider)
 
-        if (!state.showHistorySuggestions) {
+        if (!state.showHistorySuggestions && !state.showOnlyHistorySuggestions) {
             providersToRemove.add(historyStorageProvider)
         }
 
-        if (!state.showBookmarkSuggestions) {
+        if (!state.showBookmarkSuggestions && !state.showOnlyBookmarkSuggestions) {
             providersToRemove.add(bookmarksStorageSuggestionProvider)
         }
 
-        if (!state.showSearchSuggestions) {
+        val onlyBookmarkOrOnlyHistory:Boolean =
+            state.showOnlyBookmarkSuggestions ||state.showOnlyHistorySuggestions
+
+        if (!state.showSearchSuggestions || onlyBookmarkOrOnlyHistory) {
             providersToRemove.addAll(getSelectedSearchSuggestionProvider(state))
         }
 
-        if (!state.showSyncedTabsSuggestions) {
+        if (!state.showSyncedTabsSuggestions || onlyBookmarkOrOnlyHistory) {
             providersToRemove.add(syncedTabsStorageSuggestionProvider)
         }
 
-        if (activity.browsingModeManager.mode == BrowsingMode.Private) {
+        if (activity.browsingModeManager.mode == BrowsingMode.Private || onlyBookmarkOrOnlyHistory) {
             providersToRemove.add(sessionProvider)
         }
 

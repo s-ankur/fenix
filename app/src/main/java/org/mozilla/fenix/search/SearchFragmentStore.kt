@@ -62,6 +62,8 @@ data class SearchFragmentState(
     val showSearchSuggestions: Boolean,
     val showSearchSuggestionsHint: Boolean,
     val showSearchShortcuts: Boolean,
+    val showOnlyBookmarkSuggestions: Boolean,
+    val showOnlyHistorySuggestions: Boolean,
     val areShortcutsAvailable: Boolean,
     val showClipboardSuggestions: Boolean,
     val showHistorySuggestions: Boolean,
@@ -103,6 +105,8 @@ fun createInitialSearchFragmentState(
         searchEngineSource = currentSearchEngine,
         defaultEngineSource = currentSearchEngine,
         showSearchSuggestions = shouldShowSearchSuggestions,
+        showOnlyBookmarkSuggestions = false,
+        showOnlyHistorySuggestions = false,
         showSearchSuggestionsHint = false,
         showSearchShortcuts = url.isEmpty() &&
             areShortcutsAvailable &&
@@ -123,6 +127,8 @@ fun createInitialSearchFragmentState(
  */
 sealed class SearchFragmentAction : Action {
     data class SetShowSearchSuggestions(val show: Boolean) : SearchFragmentAction()
+    data class SetShowOnlyBookmarkSuggestions(val show: Boolean) : SearchFragmentAction()
+    data class SetShowOnlyHistorySuggestions(val show: Boolean) : SearchFragmentAction()
     data class SearchShortcutEngineSelected(val engine: SearchEngine) : SearchFragmentAction()
     data class SelectNewDefaultSearchEngine(val engine: SearchEngine) : SearchFragmentAction()
     data class ShowSearchShortcutEnginePicker(val show: Boolean) : SearchFragmentAction()
@@ -153,5 +159,9 @@ private fun searchStateReducer(state: SearchFragmentState, action: SearchFragmen
             state.copy(showSearchSuggestionsHint = action.show)
         is SearchFragmentAction.SetShowSearchSuggestions ->
             state.copy(showSearchSuggestions = action.show)
+        is SearchFragmentAction.SetShowOnlyBookmarkSuggestions ->
+            state.copy(showOnlyBookmarkSuggestions = action.show)
+        is SearchFragmentAction.SetShowOnlyHistorySuggestions ->
+            state.copy(showOnlyHistorySuggestions = action.show)
     }
 }

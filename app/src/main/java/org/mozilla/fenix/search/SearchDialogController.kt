@@ -187,6 +187,16 @@ class SearchDialogController(
         store.dispatch(SearchFragmentAction.ShowSearchShortcutEnginePicker(!isOpen))
     }
 
+    fun handleOnlyBookmarkButtonClicked() {
+        val isOpen = store.state.showOnlyBookmarkSuggestions
+        store.dispatch(SearchFragmentAction.ShowSearchShortcutEnginePicker(!isOpen))
+    }
+
+    fun handleOnlyHistoryButtonClicked() {
+        val isOpen = store.state.showOnlyBookmarkSuggestions
+        store.dispatch(SearchFragmentAction.ShowSearchShortcutEnginePicker(!isOpen))
+    }
+
     override fun handleClickSearchEngineSettings() {
         clearToolbarFocus()
         val directions = SearchDialogFragmentDirections.actionGlobalSearchEngineFragment()
@@ -253,4 +263,5 @@ class SearchDialogController(
             create()
         }
     }
+
 }

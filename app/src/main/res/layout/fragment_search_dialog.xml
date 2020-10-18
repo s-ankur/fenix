@@ -151,5 +151,19 @@
             android:textOff="@string/search_engine_button"
             android:textOn="@string/search_engine_button"
             app:drawableStartCompat="@drawable/ic_search" />
+
+        <ToggleButton
+            android:id="@+id/only_bookmarks_button"
+            style="@style/search_pill"
+            android:textOff="@string/library_bookmarks"
+            android:textOn="@string/library_bookmarks"
+            app:drawableStartCompat="@drawable/ic_bookmark_outline" />
+
+        <ToggleButton
+            android:id="@+id/only_history_button"
+            style="@style/search_pill"
+            android:textOff="@string/library_history"
+            android:textOn="@string/library_history"
+            app:drawableStartCompat="@drawable/ic_history" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

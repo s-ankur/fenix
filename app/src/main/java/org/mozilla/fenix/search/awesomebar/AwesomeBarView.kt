@@ -228,11 +228,23 @@ class AwesomeBarView(
     private fun getProvidersToAdd(state: SearchFragmentState): MutableSet<AwesomeBar.SuggestionProvider> {
         val providersToAdd = mutableSetOf<AwesomeBar.SuggestionProvider>()
 
+        if (state.showOnlyBookmarkSuggestions)
+        {
+            providersToAdd.add(bookmarksStorageSuggestionProvider)
+            return providersToAdd
+        }
+
+        if (state.showOnlyHistorySuggestions)
+        {
+            providersToAdd.add(historyStorageProvider)
+            return providersToAdd
+        }
+
         if (state.showHistorySuggestions) {
             providersToAdd.add(historyStorageProvider)
         }
 
-        if (state.showBookmarkSuggestions) {
+        if (state.showBookmarkSuggestions ) {
             providersToAdd.add(bookmarksStorageSuggestionProvider)
         }
 

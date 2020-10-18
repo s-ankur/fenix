@@ -5,6 +5,7 @@
 package org.mozilla.fenix.search
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -193,8 +194,16 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
             dismissAllowingStateLoss()
         }
 
-        view.search_engines_shortcut_button.setOnClickListener {
+        search_engines_shortcut_button.setOnClickListener {
             interactor.onSearchShortcutsButtonClicked()
+        }
+
+        only_bookmarks_button.setOnClickListener{
+            interactor.onOnlyBookmarksButtonClicked()
+        }
+
+        only_history_button.setOnClickListener{
+            interactor.onOnlyHistoryButtonClicked()
         }
 
         qrFeature.set(

@@ -189,12 +189,12 @@ class SearchDialogController(
 
     fun handleOnlyBookmarkButtonClicked() {
         val isOpen = store.state.showOnlyBookmarkSuggestions
-        store.dispatch(SearchFragmentAction.ShowSearchShortcutEnginePicker(!isOpen))
+        store.dispatch(SearchFragmentAction.SetShowOnlyBookmarkSuggestions(!isOpen))
     }
 
     fun handleOnlyHistoryButtonClicked() {
-        val isOpen = store.state.showOnlyBookmarkSuggestions
-        store.dispatch(SearchFragmentAction.ShowSearchShortcutEnginePicker(!isOpen))
+        val isOpen = store.state.showOnlyHistorySuggestions
+        store.dispatch(SearchFragmentAction.SetShowOnlyHistorySuggestions(!isOpen))
     }
 
     override fun handleClickSearchEngineSettings() {

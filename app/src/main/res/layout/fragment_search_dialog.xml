@@ -123,7 +123,7 @@
             app:layout_constraintVertical_chainStyle="packed" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
+    <RadioGroup
         android:id="@+id/pill_wrapper"
         android:layout_width="0dp"
         android:layout_height="@dimen/search_fragment_pill_height"
@@ -137,7 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ToggleButton
+        <RadioButton
             android:id="@+id/qr_scan_button"
             style="@style/search_pill"
             android:layout_marginEnd="@dimen/search_fragment_scan_button_margin_end"
@@ -145,25 +145,25 @@
             android:textOn="@string/search_scan_button"
             app:drawableStartCompat="@drawable/ic_qr" />
 
-        <ToggleButton
+        <RadioButton
             android:id="@+id/search_engines_shortcut_button"
             style="@style/search_pill"
             android:textOff="@string/search_engine_button"
             android:textOn="@string/search_engine_button"
             app:drawableStartCompat="@drawable/ic_search" />
 
-        <ToggleButton
+        <RadioButton
             android:id="@+id/only_bookmarks_button"
             style="@style/search_pill"
             android:textOff="@string/library_bookmarks"
             android:textOn="@string/library_bookmarks"
             app:drawableStartCompat="@drawable/ic_bookmark_outline" />
 
-        <ToggleButton
+        <RadioButton
             android:id="@+id/only_history_button"
             style="@style/search_pill"
             android:textOff="@string/library_history"
             android:textOn="@string/library_history"
             app:drawableStartCompat="@drawable/ic_history" />
-    </LinearLayout>
+    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -39,6 +39,8 @@ interface SearchController {
     fun handleUrlTapped(url: String)
     fun handleSearchTermsTapped(searchTerms: String)
     fun handleSearchShortcutEngineSelected(searchEngine: SearchEngine)
+    fun handleHistorySearchButtonClicked()
+    fun handleBookmarksSearchButtonClicked()
     fun handleClickSearchEngineSettings()
     fun handleExistingSessionSelected(session: Session)
     fun handleExistingSessionSelected(tabId: String)
@@ -124,6 +126,9 @@ class SearchDialogController(
         val textMatchesCurrentSearch = fragmentStore.state.searchTerms == text
 
         fragmentStore.dispatch(SearchFragmentAction.UpdateQuery(text))
+
+        if ( fragmentStore.state.showHistorySearch || fragmentStore.state.showBookmarksSearch) return
+
         fragmentStore.dispatch(
             SearchFragmentAction.ShowSearchShortcutEnginePicker(
                 (textMatchesCurrentUrl || textMatchesCurrentSearch || text.isEmpty()) &&
@@ -191,6 +196,16 @@ class SearchDialogController(
     override fun handleSearchShortcutsButtonClicked() {
         val isOpen = fragmentStore.state.showSearchShortcuts
         fragmentStore.dispatch(SearchFragmentAction.ShowSearchShortcutEnginePicker(!isOpen))
+    }
+
+    override fun handleBookmarksSearchButtonClicked() {
+        val isOpen = fragmentStore.state.showBookmarksSearch
+        fragmentStore.dispatch(SearchFragmentAction.BookmarksSearchSelected(!isOpen))
+    }
+
+    override fun handleHistorySearchButtonClicked() {
+        val isOpen = fragmentStore.state.showHistorySearch
+        fragmentStore.dispatch(SearchFragmentAction.HistorySearchSelected(!isOpen))
     }
 
     override fun handleClickSearchEngineSettings() {

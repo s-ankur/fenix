@@ -230,6 +230,14 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
             interactor.onSearchShortcutsButtonClicked()
         }
 
+        view.bookmarks_search_button.setOnClickListener {
+            interactor.onBookmarksSearchButtonClicked()
+        }
+
+        view.history_search_button.setOnClickListener {
+            interactor.onHistorySearchButtonClicked()
+        }
+
         qrFeature.set(
             createQrFeature(),
             owner = this,
@@ -316,13 +324,17 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
             val shouldShowAwesomebar =
                 !firstUpdate &&
                 it.query.isNotBlank() ||
-                it.showSearchShortcuts
+                it.showSearchShortcuts ||
+                it.showBookmarksSearch ||
+                it.showHistorySearch
 
             awesome_bar?.visibility = if (shouldShowAwesomebar) View.VISIBLE else View.INVISIBLE
             updateSearchSuggestionsHintVisibility(it)
             updateClipboardSuggestion(it, requireContext().components.clipboardHandler.url)
             updateToolbarContentDescription(it)
             updateSearchShortcutsIcon(it)
+            updateBookmarksSearchIcon(it)
+            updateHistorySearchIcon(it)
             toolbarView.update(it)
             awesomeBarView.update(it)
             firstUpdate = false
@@ -335,6 +347,8 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             qr_scan_button.accessibilityTraversalAfter = searchWrapperId
             search_engines_shortcut_button.accessibilityTraversalAfter = searchWrapperId
+            bookmarks_search_button.accessibilityTraversalAfter = searchWrapperId
+            history_search_button.accessibilityTraversalAfter = searchWrapperId
             fill_link_from_clipboard.accessibilityTraversalAfter = searchWrapperId
         } else {
             viewLifecycleOwner.lifecycleScope.launch {
@@ -567,6 +581,30 @@ class SearchDialogFragment : AppCompatDialogFragment(), UserInteractionHandler {
 
             val color = if (showShortcuts) R.attr.contrastText else R.attr.primaryText
             search_engines_shortcut_button.compoundDrawables[0]?.setTint(
+                requireContext().getColorFromAttr(color)
+            )
+        }
+    }
+
+    private fun updateBookmarksSearchIcon(searchState: SearchFragmentState) {
+        view?.apply {
+            val showBookmarksSearch = searchState.showBookmarksSearch
+            bookmarks_search_button.isChecked = showBookmarksSearch
+
+            val color = if (showBookmarksSearch) R.attr.contrastText else R.attr.primaryText
+            bookmarks_search_button.compoundDrawables[0]?.setTint(
+                requireContext().getColorFromAttr(color)
+            )
+        }
+    }
+
+    private fun updateHistorySearchIcon(searchState: SearchFragmentState) {
+        view?.apply {
+            val showHistorySearch = searchState.showHistorySearch
+            history_search_button.isChecked = showHistorySearch
+
+            val color = if (showHistorySearch) R.attr.contrastText else R.attr.primaryText
+            history_search_button.compoundDrawables[0]?.setTint(
                 requireContext().getColorFromAttr(color)
             )
         }

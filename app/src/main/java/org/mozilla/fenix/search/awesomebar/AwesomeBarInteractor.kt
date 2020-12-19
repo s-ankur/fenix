@@ -50,4 +50,14 @@ interface AwesomeBarInteractor {
      * Called whenever the Shortcuts button is clicked
      */
     fun onSearchShortcutsButtonClicked()
+
+    /**
+     * Called whenever the Bookmarks Search button is clicked
+     */
+    fun onBookmarksSearchButtonClicked()
+
+    /**
+     * Called whenever the History Search button is clicked
+     */
+    fun onHistorySearchButtonClicked()
 }

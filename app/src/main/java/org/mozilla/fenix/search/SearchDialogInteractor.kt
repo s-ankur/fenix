@@ -46,6 +46,14 @@ class SearchDialogInteractor(
         searchController.handleSearchShortcutsButtonClicked()
     }
 
+    override fun onBookmarksSearchButtonClicked() {
+        searchController.handleBookmarksSearchButtonClicked()
+    }
+
+    override fun onHistorySearchButtonClicked() {
+        searchController.handleHistorySearchButtonClicked()
+    }
+
     override fun onClickSearchEngineSettings() {
         searchController.handleClickSearchEngineSettings()
     }

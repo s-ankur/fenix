@@ -226,23 +226,25 @@ class AwesomeBarView(
     private fun getProvidersToAdd(state: SearchFragmentState): MutableSet<AwesomeBar.SuggestionProvider> {
         val providersToAdd = mutableSetOf<AwesomeBar.SuggestionProvider>()
 
-        if (state.showHistorySuggestions) {
+        val onlyOneType =state.showHistorySearch || state.showBookmarksSearch
+
+        if ((state.showHistorySuggestions && !onlyOneType)|| state.showHistorySearch) {
             providersToAdd.add(historyStorageProvider)
         }
 
-        if (state.showBookmarkSuggestions) {
+        if ((state.showBookmarkSuggestions  && !onlyOneType )|| state.showBookmarksSearch) {
             providersToAdd.add(bookmarksStorageSuggestionProvider)
         }
 
-        if (state.showSearchSuggestions) {
+        if (state.showSearchSuggestions && !onlyOneType) {
             providersToAdd.addAll(getSelectedSearchSuggestionProvider(state))
         }
 
-        if (state.showSyncedTabsSuggestions) {
+        if (state.showSyncedTabsSuggestions && !onlyOneType) {
             providersToAdd.add(syncedTabsStorageSuggestionProvider)
         }
 
-        if (activity.browsingModeManager.mode == BrowsingMode.Normal) {
+        if (activity.browsingModeManager.mode == BrowsingMode.Normal && !onlyOneType) {
             providersToAdd.add(sessionProvider)
         }
 
@@ -252,25 +254,27 @@ class AwesomeBarView(
     private fun getProvidersToRemove(state: SearchFragmentState): MutableSet<AwesomeBar.SuggestionProvider> {
         val providersToRemove = mutableSetOf<AwesomeBar.SuggestionProvider>()
 
+        val onlyOneType =state.showHistorySearch || state.showBookmarksSearch
+
         providersToRemove.add(shortcutsEnginePickerProvider)
 
-        if (!state.showHistorySuggestions) {
+        if ((!state.showHistorySuggestions || onlyOneType) && !state.showHistorySearch) {
             providersToRemove.add(historyStorageProvider)
         }
 
-        if (!state.showBookmarkSuggestions) {
+        if ((!state.showBookmarkSuggestions || onlyOneType) && !state.showBookmarksSearch) {
             providersToRemove.add(bookmarksStorageSuggestionProvider)
         }
 
-        if (!state.showSearchSuggestions) {
+        if (!state.showSearchSuggestions || onlyOneType) {
             providersToRemove.addAll(getSelectedSearchSuggestionProvider(state))
         }
 
-        if (!state.showSyncedTabsSuggestions) {
+        if (!state.showSyncedTabsSuggestions || onlyOneType) {
             providersToRemove.add(syncedTabsStorageSuggestionProvider)
         }
 
-        if (activity.browsingModeManager.mode == BrowsingMode.Private) {
+        if (activity.browsingModeManager.mode == BrowsingMode.Private || onlyOneType) {
             providersToRemove.add(sessionProvider)
         }
 

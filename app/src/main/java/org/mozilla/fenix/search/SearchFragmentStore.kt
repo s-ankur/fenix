@@ -53,6 +53,8 @@ sealed class SearchEngineSource {
  * @property showSearchSuggestions Whether or not to show search suggestions from the search engine in the AwesomeBar
  * @property showSearchSuggestionsHint Whether or not to show search suggestions in private hint panel
  * @property showSearchShortcuts Whether or not to show search shortcuts in the AwesomeBar
+ * @property showBookmarkSuggestions Whether or not to show bookmarks search in the AwesomeBar
+ * @property showHistorySearch Whether or not to show history search in the AwesomeBar
  * @property areShortcutsAvailable Whether or not there are >=2 search engines installed
  * so to know to present users with certain options or not.
  * @property showSearchShortcutsSetting Whether the setting for showing search shortcuts is enabled
@@ -71,6 +73,8 @@ data class SearchFragmentState(
     val showSearchSuggestions: Boolean,
     val showSearchSuggestionsHint: Boolean,
     val showSearchShortcuts: Boolean,
+    val showHistorySearch: Boolean,
+    val showBookmarksSearch: Boolean,
     val areShortcutsAvailable: Boolean,
     val showSearchShortcutsSetting: Boolean,
     val showClipboardSuggestions: Boolean,
@@ -108,6 +112,8 @@ fun createInitialSearchFragmentState(
         showSearchSuggestions = shouldShowSearchSuggestions,
         showSearchSuggestionsHint = false,
         showSearchShortcuts = false,
+        showHistorySearch = false,
+        showBookmarksSearch = false,
         areShortcutsAvailable = false,
         showSearchShortcutsSetting = settings.shouldShowSearchShortcuts,
         showClipboardSuggestions = settings.shouldShowClipboardSuggestions,
@@ -127,6 +133,8 @@ sealed class SearchFragmentAction : Action {
     data class SetShowSearchSuggestions(val show: Boolean) : SearchFragmentAction()
     data class SearchShortcutEngineSelected(val engine: SearchEngine) : SearchFragmentAction()
     data class ShowSearchShortcutEnginePicker(val show: Boolean) : SearchFragmentAction()
+    data class BookmarksSearchSelected(val show: Boolean) : SearchFragmentAction()
+    data class HistorySearchSelected(val show: Boolean) : SearchFragmentAction()
     data class AllowSearchSuggestionsInPrivateModePrompt(val show: Boolean) : SearchFragmentAction()
     data class UpdateQuery(val query: String) : SearchFragmentAction()
 
@@ -147,7 +155,11 @@ private fun searchStateReducer(state: SearchFragmentState, action: SearchFragmen
                 showSearchShortcuts = false
             )
         is SearchFragmentAction.ShowSearchShortcutEnginePicker ->
-            state.copy(showSearchShortcuts = action.show && state.areShortcutsAvailable)
+            state.copy(showSearchShortcuts = action.show && state.areShortcutsAvailable, showBookmarksSearch = false,showHistorySearch = false)
+        is SearchFragmentAction.BookmarksSearchSelected ->
+            state.copy(showBookmarksSearch = action.show,showHistorySearch = false,showSearchShortcuts = false)
+        is SearchFragmentAction.HistorySearchSelected ->
+            state.copy(showHistorySearch = action.show,showSearchShortcuts = false,showBookmarksSearch = false)
         is SearchFragmentAction.UpdateQuery ->
             state.copy(query = action.query)
         is SearchFragmentAction.AllowSearchSuggestionsInPrivateModePrompt ->

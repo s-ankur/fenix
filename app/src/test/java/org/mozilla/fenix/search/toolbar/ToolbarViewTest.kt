@@ -52,6 +52,8 @@ class ToolbarViewTest {
         showSearchShortcutsSetting = false,
         showSearchSuggestionsHint = false,
         showSearchSuggestions = false,
+        showHistorySearch = false,
+        showBookmarksSearch = false,
         showSearchShortcuts = false,
         areShortcutsAvailable = true,
         showClipboardSuggestions = false,
